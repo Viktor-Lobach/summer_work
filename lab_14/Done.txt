@@ -1,0 +1,6 @@
+
+In [1] string, words:  percent
+  children 
+In [2] string, words:  education  religious 
+In [3] string, words:  schools  parents  schools 
+In [4] string, words:  schools  private 
