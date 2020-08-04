@@ -4,33 +4,45 @@
 
 #define LEN_STR 100
 
-void special_func( char text_1[LEN_STR], char text_2[LEN_STR] ){
+void special_func( char text_1[LEN_STR], char text_2[LEN_STR], char _oupt_name_[20] ){
   char sep[7] = " ,./?!";
   char *ptr_str_1 = strtok(text_1, sep);
-  char *ptr_str_2 = strtok(text_2, sep);
-  int _iter_=0;
+  char final_str[LEN_STR];
+  char *istr;
+
 
   while ( ptr_str_1 != NULL ){
-    while ( ptr_str_2 != NULL ){
-      if ( strcmp(ptr_str_1, ptr_str_2) == 0 )
-        _iter_++;
-
-      ptr_str_2 = strtok(NULL, sep);
-    }
+    istr = strstr(text_2, ptr_str_1);
+    if ( istr == NULL )
+      strcat(final_str, ptr_str_1);
+    
     ptr_str_1 = strtok(NULL, sep);
   }
 
-  printf("\n Count of non unicorn elements = [%d]", _iter_);
+  FILE *ptr_file = fopen(_oupt_name_, "w");
+    fprintf(ptr_file, "%s", final_str);
+  fclose(ptr_file);
 
 }
 
+void get_file(char _inpt_name_[20], char _oupt_name_[20]){
+  char first_sen[20], second_sen[20];
+  
+  FILE *ptr_file = fopen(_inpt_name_, "r");
+    fgets(first_sen, LEN_STR-1, ptr_file);
+    fgets(second_sen, LEN_STR-1, ptr_file);
+  fclose(ptr_file);
+  
+  special_func(first_sen, second_sen, _oupt_name_);
+}
 
 void main(){
 
-  char text_1[LEN_STR], text_2[LEN_STR];
+    char fir_str[LEN_STR], sec_str[LEN_STR];
 
-  printf("\n\tEnnter the first text > "); gets(text_1);
-  printf("\n\tEnnter the second text > "); gets(text_2);
+    printf("\n\tEnter the first string > "); gets(fir_str);
+    printf("\n\tEnter the second string > "); gets(sec_str);
 
-  special_func(text_1, text_2);
+    special_func(fir_str, sec_str, "done_task_2.txt");
+
 }
